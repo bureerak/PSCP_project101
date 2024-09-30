@@ -3,7 +3,9 @@ from django.db import models
 # Create your models here.
 
 class Room(models.Model):
-    room_name = models.CharField(max_length=50)
+    room_name = models.CharField(max_length=50, unique=True)
+    max_members = models.PositiveIntegerField(default=4)  # Maximum number of members allowed
+    current_members = models.PositiveIntegerField(default=0)  # Current number of members
 
     def __str__(self):
         return self.room_name

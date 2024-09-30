@@ -15,7 +15,15 @@ def home_page(request):
     return render(request, 'home/main.html')
 
 def in_game(request, room_name, username):
+
+    # Get the existing room
     existing_room = Room.objects.get(room_name=room_name)
+
+    # Check if the room is full
+    if existing_room.current_members >= existing_room.max_members:
+        # Redirect to a 'room full' page or return an error message
+        return render(request, 'home/room_full.html', {'room_name': room_name})
+
     get_message = Message.objects.filter(room=existing_room)
     context = {
         "messages":get_message,
